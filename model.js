@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 
 const interactionSchema = new mongoose.Schema({
+    userSessionID: String,
     deviceType: String,
     adminID: String,
     browserName: String,
