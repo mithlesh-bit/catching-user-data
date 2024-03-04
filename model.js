@@ -6,8 +6,9 @@ const interactionSchema = new mongoose.Schema({
     sessionID: String,
     timestamp: Date,
     pageTitle: String,
-    value: String,
-    userToken: String
+    value: String, // Optional, only for 'input' events
+    userToken: String,
+    deviceType: String // Add this line to include device type information
 }, { timestamps: true });
 
 const Interaction = mongoose.model('Interaction', interactionSchema);
