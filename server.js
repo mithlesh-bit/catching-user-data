@@ -37,7 +37,7 @@ app.post('/api', async (req, res) => {
         const { userSessionID, deviceType, adminID, eventType, identifier, pageTitle, browserName, browserVersion, currentURL } = req.body;
         const timestamp = new Date(); // You might already have this from the client or want to use the server time
 
-        const newInteraction = new Interaction({
+        const newInteraction = new Admin({
             userSessionID, deviceType, adminID, eventType, identifier, pageTitle, browserName, browserVersion, currentURL, timestamp
         });
 
