@@ -1,20 +1,16 @@
 const mongoose = require('mongoose');
 
 const interactionSchema = new mongoose.Schema({
-    userSessionID: String,
-    deviceType: String,
-    adminID: String,
-    browserName: String,
-    browserVersion: String,
-    currentURL: String,
-    eventType: String,
-    identifier: String,
-    sessionID: String,
-    timestamp: Date,
-    pageTitle: String,
-    value: String, // Optional, only for 'input' events
-    userToken: String,
-    deviceType: String // Add this line to include device type information
+    userSessionID: { type: String, },
+    deviceType: { type: String, },
+    adminID: { type: String, },
+    eventType: { type: String, },
+    identifier: { type: String, },
+    pageTitle: { type: String, },
+    browserName: { type: String, },
+    browserVersion: { type: String, },
+    currentURL: { type: String, },
+    timestamp: { type: Date, default: Date.now }
 });
 
 const Interaction = mongoose.model('Interaction', interactionSchema);

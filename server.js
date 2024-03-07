@@ -34,18 +34,19 @@ app.get('/api', (req, res) => {
 
 app.post('/api', async (req, res) => {
     try {
-        const { userSessionID, deviceType, adminID, eventType, identifier, pageTitle, browserName, browserVersion, currentURL } = req.body;
-        const timestamp = new Date(); // You might already have this from the client or want to use the server time
+        // Capture interaction data from request body
+        const interactionData = req.body;
 
-        const newInteraction = new Admin({
-            userSessionID, deviceType, adminID, eventType, identifier, pageTitle, browserName, browserVersion, currentURL, timestamp
-        });
+        // Create a new Interaction instance
+        const interaction = new Admin(interactionData);
 
-        await newInteraction.save();
-        res.status(201).send({ message: "Interaction logged successfully." });
+        // Save the interaction instance to the database
+        await interaction.save();
+
+        res.status(201).json({ message: "Interaction logged successfully", interaction: interaction });
     } catch (error) {
         console.error('Error saving interaction:', error);
-        res.status(500).send({ message: "Error logging interaction." });
+        res.status(500).json({ message: "Error logging interaction", error: error.message });
     }
 });
 
