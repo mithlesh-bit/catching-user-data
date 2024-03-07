@@ -34,19 +34,25 @@ app.get('/api', (req, res) => {
 
 app.post('/api', async (req, res) => {
     try {
-        // Capture interaction data from request body
-        const interactionData = req.body;
+        const { userSessionID, deviceType, adminID, eventType, identifier, pageTitle, browserName, browserVersion, currentURL } = req.body;
 
-        // Create a new Interaction instance
-        const interaction = new Admin(interactionData);
+        const newInteraction = new Admin({
+            userSessionID, // From client
+            deviceType, // From client
+            adminID, // From client or server-side logic
+            eventType, // From client
+            identifier, // From client
+            pageTitle, // From client
+            browserName, // From client
+            browserVersion, // From client
+            currentURL, // From client
+            timestamp: new Date() // From server time
+        });
 
-        // Save the interaction instance to the database
-        await interaction.save();
-
-        res.status(201).json({ message: "Interaction logged successfully", interaction: interaction });
+        await newInteraction.save();
+        res.status(201).json({ message: "Interaction logged successfully" });
     } catch (error) {
-        console.error('Error saving interaction:', error);
-        res.status(500).json({ message: "Error logging interaction", error: error.message });
+        res.status(500).json({ message: "Failed to log interaction", error: error.message });
     }
 });
 
