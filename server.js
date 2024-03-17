@@ -1,7 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
-const Admin = require('./model')
+const Interaction = require('./model')
 const app = express();
 const port = 6000;
 
@@ -34,27 +34,14 @@ app.get('/api', (req, res) => {
 
 app.post('/api', async (req, res) => {
     try {
-        const { userSessionID, deviceType, adminID, eventType, identifier, pageTitle, browserName, browserVersion, currentURL } = req.body;
-
-        const newInteraction = new Admin({
-            userSessionID, // From client
-            deviceType, // From client
-            adminID, // From client or server-side logic
-            eventType, // From client
-            identifier, // From client
-            pageTitle, // From client
-            browserName, // From client
-            browserVersion, // From client
-            currentURL, // From client
-            timestamp: new Date() // From server time
-        });
-
-        await newInteraction.save();
+        const interaction = new Interaction(req.body);
+        await interaction.save();
         res.status(201).json({ message: "Interaction logged successfully" });
     } catch (error) {
         res.status(500).json({ message: "Failed to log interaction", error: error.message });
     }
 });
+
 
 app.listen(port, () => {
     console.log(`Server running at http://localhost:${port}`);
