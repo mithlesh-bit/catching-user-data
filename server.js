@@ -33,9 +33,12 @@ app.get('/api', (req, res) => {
 });
 
 app.post('/api', async (req, res) => {
+    console.log("is called");
     try {
         const interaction = new Interaction(req.body);
         await interaction.save();
+        console.log("is saved");
+
         res.status(201).json({ message: "Interaction logged successfully" });
     } catch (error) {
         res.status(500).json({ message: "Failed to log interaction", error: error.message });
